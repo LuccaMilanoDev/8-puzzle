@@ -27,5 +27,30 @@ public class Estado {
         System.out.println();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Estado)) {
+            return false;
+        }
+        Estado outro = (Estado) obj;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (this.tabuleiro[i][j] != outro.tabuleiro[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
+    @Override
+    public int hashCode() {
+        int resultado = 0;
+        for (int[] linha : tabuleiro) {
+            for (int num : linha) {
+                resultado = resultado * 31 + num;
+            }
+        }
+        return resultado;
+    }
 }
