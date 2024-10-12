@@ -1,25 +1,14 @@
 public class Main {
     public static void main(String[] args) {
-        // estado inicial
+        //estado inicial 
         int[][] inicial = {
-            {1, 4, 3},
-            {0, 2, 8},
-            {7, 5, 6}
-        };
-        int[][] segundo = {
-            {6, 0, 3},
-            {4, 2, 1},
+            {1, 2, 3},
+            {4, 0, 6},
             {7, 5, 8}
         };
-        int[][] terceiro = {
-            {1, 4, 3},
-            {7, 2, 6},
-            {0, 5, 8}
-        };
         Estado estadoInicial = new Estado(inicial);
-        Estado estadoSecundario = new Estado(segundo);
-        Estado estadoTerceiro = new Estado(terceiro);
-        // objetivo
+
+        //estado objetivo 
         int[][] objetivo = {
             {1, 2, 3},
             {4, 5, 6},
@@ -27,14 +16,32 @@ public class Main {
         };
         Estado estadoObjetivo = new Estado(objetivo);
 
-        Puzzle solver = new Puzzle(estadoInicial, estadoObjetivo);
-        No solucao = solver.iddfs();
+        // copy and edit
+        Puzzle solverCopia = new Puzzle(estadoInicial, estadoObjetivo);
+        long inicioCopia = System.currentTimeMillis();
+        No solucaoCopia = solverCopia.iddfs();
+        long fimCopia = System.currentTimeMillis();
 
-        if (solucao != null) {
-            System.out.println("Solução encontrada:");
-            solver.imprimirCaminho(solucao);
+        if (solucaoCopia != null) {
+            System.out.println("Solução encontrada (Cópia e Edição):");
+            solverCopia.imprimirCaminho(solucaoCopia);
+            System.out.println("Tempo de execução: " + (fimCopia - inicioCopia) + " ms\n");
         } else {
-            System.out.println("Nenhuma solução encontrada.");
+            System.out.println("Nenhuma solução encontrada (Cópia e Edição).\n");
+        }
+
+        // modificar diretamente
+        PuzzleSolverModificado solverModificado = new PuzzleSolverModificado(estadoInicial, estadoObjetivo);
+        long inicioModificado = System.currentTimeMillis();
+        No solucaoModificado = solverModificado.iddfs();
+        long fimModificado = System.currentTimeMillis();
+
+        if (solucaoModificado != null) {
+            System.out.println("Solução encontrada (Modificação Direta):");
+            solverModificado.imprimirCaminho(solucaoModificado);
+            System.out.println("Tempo de execução: " + (fimModificado - inicioModificado) + " ms");
+        } else {
+            System.out.println("Nenhuma solução encontrada (Modificação Direta).");
         }
     }
 }
